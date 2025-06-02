@@ -83,6 +83,7 @@ class GradeChecker:
         logger.info(f"Scraped {grades}")
         return grades
 
+
     def select_semester(self, page: Page) -> bool:
         """Select the semester radio button"""
         xpath_row = f'//tr[.//span[text()="{SEMESTER_NAME}"]]'
@@ -100,6 +101,7 @@ class GradeChecker:
             logger.error(f"Failed to select semester: {e}")
             return False
 
+
     @log_exceptions
     def login_and_navigate(self, page: Page):
         """Handle login and navigation to grades page"""
@@ -115,6 +117,7 @@ class GradeChecker:
         page.wait_for_load_state("networkidle")
 
         logger.info("Navigation completed")
+
 
     @log_exceptions
     def check_grades(self, page: Page) -> dict:
@@ -133,6 +136,7 @@ class GradeChecker:
             self.init_done = True
 
         return grades
+
 
     @log_exceptions
     def process_grade_changes(self, new_grades: dict) -> bool:
@@ -153,6 +157,7 @@ class GradeChecker:
 
         return changes_found
 
+
     def run_single_check(self, page: Page) -> bool:
         """Perform one grade check cycle"""
         try:
@@ -166,6 +171,7 @@ class GradeChecker:
         except Exception as e:
             logger.exception(f"Grade check failed: {e}")
             return False
+
 
     def run(self, check_interval: int = DEFAULT_CHECK_INTERVAL, headless: bool = True):
         """Main execution loop"""
@@ -193,6 +199,7 @@ class GradeChecker:
                     retries = 0
                 except KeyboardInterrupt:
                     logger.info("KeyboardInterrupt received, exiting...")
+                    exit(0)
                 except Exception as e:
                     logger.exception(f"Unexpected error: {e}")
                     page.wait_for_timeout(DEFAULT_RETRY_DELAY * 1000)
