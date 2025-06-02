@@ -145,7 +145,7 @@ class GradeChecker:
 
         for course, grade in new_grades.items():
             if course not in self.current_grades or self.current_grades[course] != grade:
-                logger.success(f"New grade detected: {course} → {grade}")
+                logger.info(f"New grade detected: {course} → {grade}")
 
                 beepy.beep(sound=6)
                 self.macos_notify("📢 New Grade Posted!", f"{course}: {grade}")
@@ -153,7 +153,7 @@ class GradeChecker:
 
                 self.current_grades[course] = grade
                 changes_found = True
-                logger.success(f"Grade change processed for {course}")
+                logger.info("Grade change processed for {course}")
 
         return changes_found
 
